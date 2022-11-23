@@ -6,7 +6,7 @@
 /*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 09:13:59 by aascedu           #+#    #+#             */
-/*   Updated: 2022/11/23 14:16:15 by aascedu          ###   ########lyon.fr   */
+/*   Updated: 2022/11/23 13:12:07 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,36 +66,30 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 	return (dst);
 }
 
-
-char	*add_buffer(char *buff)
-{
-	int	i;
-
-	i = 0;
-
-}
-
-
-char	*read_buffer(char *buff)
-{
-
-}
-
 char	*get_next_line(int fd)
 {
-	static char	buff[BUFFER_SIZE + 1] = {0};
+	static char	buff[BUFFER_SIZE];
 	char		*result;
 	int			length_read;
 	int			i;
 
 	if (fd < 0 || fd > OPEN_MAX)
 		return (NULL);
-	result = ft_calloc(1, 1);
-	if (buff[0] != '\0')
-		result = add_buffer(buff);
 	length_read = read(fd, buff, BUFFER_SIZE);
 	if (length_read <= 0)
 		return (NULL);
-	result = read_buffer(buff);
+	result = ft_calloc(1, 1);
+	result = ft_strjoin(result, buff);
+	i = 0;
+	while (ft_isnew(result, i) == -1)
+	{
+		length_read = read(fd, buff, BUFFER_SIZE);
+		result = ft_strjoin(result, buff);
+		i++;
+	}
+	if (length_read >= 0)
+		ft_memmove(buff, buff - ft_isnew(buff, 0), (BUFFER_SIZE - ft_isnew(buff, 0)));
+	result = ft_strdup_index(result, ft_isnew(result, i));
+
 	return (result);
 }
