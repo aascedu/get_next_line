@@ -6,7 +6,7 @@
 /*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 09:13:59 by aascedu           #+#    #+#             */
-/*   Updated: 2022/11/23 16:53:25 by aascedu          ###   ########lyon.fr   */
+/*   Updated: 2022/11/23 17:30:40 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,6 @@ void	ft_bzero(void *s, size_t n)
 	}
 }
 
-void	*ft_calloc(size_t count, size_t size)
-{
-	void	*tab;
-
-	if (size > 0 && count > (SIZE_MAX / size))
-		return (NULL);
-	tab = malloc(count * size);
-	if (!tab)
-		return (NULL);
-	ft_bzero(tab, count * size);
-	return (tab);
-}
 
 void	*ft_memmove(void *dst, const void *src, size_t len)
 {
@@ -79,7 +67,6 @@ char	*add_buffer(char *buff, char *result)
 	result = ft_strjoin(result, ft_strdup_index(buff, i));
 	ft_memmove(buff, buff + i, BUFFER_SIZE - i + 1);
 	ft_bzero(buff + BUFFER_SIZE - i, i);
-	//printf("result:%s\n", result);
 	return (result);
 }
 
@@ -91,7 +78,7 @@ char	*read_buffer(int fd, char *buff, char *result)
 
 	i = 0;
 	length_read = read(fd, buff, BUFFER_SIZE);
-	if (length_read == 0)
+	if (length_read <= 0)
 	{
 		buff[BUFFER_SIZE] = EOF;
 		return (free(result), NULL);
@@ -116,14 +103,15 @@ char	*get_next_line(int fd)
 		return (NULL);
 	if (ft_is_set(buff, EOF))
 		return (NULL);
-	result = ft_calloc(1, 1);
+	result = (char *)malloc(sizeof(char));
+	if (!result)
+		return (NULL);
+	*result = 0;
 	if (buff[0] != '\0')
 	{
-		// printf("buffer = %s\n", buff);
 		result = add_buffer(buff, result);
 		if (ft_is_set(result, '\n'))
 			return (result);
-		// printf("result = %s\n", result);
 	}
 	result = read_buffer(fd, buff, result);
 	return (result);
