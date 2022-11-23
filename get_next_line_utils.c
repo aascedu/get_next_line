@@ -6,7 +6,7 @@
 /*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 09:13:52 by aascedu           #+#    #+#             */
-/*   Updated: 2022/11/23 13:05:51 by aascedu          ###   ########lyon.fr   */
+/*   Updated: 2022/11/23 16:35:31 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,21 @@ size_t	ft_strlen(char *str)
 	return (i);
 }
 
-int	ft_isnew(char *line, int i)
+int	ft_is_set(char *str, char c)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == c)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int	ft_index_nl(char *line, int i)
 {
 	int	j;
 
@@ -51,7 +65,6 @@ char	*ft_strdup_index(char *s1, size_t index)
 		i++;
 	}
 	copy[i] = '\0';
-	free(s1);
 	return (copy);
 }
 

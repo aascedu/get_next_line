@@ -6,11 +6,12 @@
 /*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 09:13:59 by aascedu           #+#    #+#             */
-/*   Updated: 2022/11/23 14:16:15 by aascedu          ###   ########lyon.fr   */
+/*   Updated: 2022/11/23 16:53:25 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stdio.h>
 
 void	ft_bzero(void *s, size_t n)
 {
@@ -66,36 +67,82 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 	return (dst);
 }
 
-
-char	*add_buffer(char *buff)
+char	*add_buffer(char *buff, char *result)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
-
+	while (buff[i] && buff[i] != '\n')
+		i++;
+	if (buff[i] == '\n')
+		i++;
+	result = ft_strjoin(result, ft_strdup_index(buff, i));
+	ft_memmove(buff, buff + i, BUFFER_SIZE - i + 1);
+	ft_bzero(buff + BUFFER_SIZE - i, i);
+	//printf("result:%s\n", result);
+	return (result);
 }
 
 
-char	*read_buffer(char *buff)
+char	*read_buffer(int fd, char *buff, char *result)
 {
+	int	i;
+	int	length_read;
 
+	i = 0;
+	length_read = read(fd, buff, BUFFER_SIZE);
+	if (length_read == 0)
+	{
+		buff[BUFFER_SIZE] = EOF;
+		return (free(result), NULL);
+	}
+	while (length_read == BUFFER_SIZE && !ft_is_set(buff, '\n'))
+	{
+		result = add_buffer(buff, result);
+		length_read = read(fd, buff, BUFFER_SIZE);
+	}
+	if (length_read < BUFFER_SIZE)
+	if (!ft_is_set(result, '\n'))
+		result = add_buffer(buff, result);
+	return (result);
 }
 
 char	*get_next_line(int fd)
 {
 	static char	buff[BUFFER_SIZE + 1] = {0};
 	char		*result;
-	int			length_read;
-	int			i;
 
 	if (fd < 0 || fd > OPEN_MAX)
 		return (NULL);
+	if (ft_is_set(buff, EOF))
+		return (NULL);
 	result = ft_calloc(1, 1);
 	if (buff[0] != '\0')
-		result = add_buffer(buff);
-	length_read = read(fd, buff, BUFFER_SIZE);
-	if (length_read <= 0)
-		return (NULL);
-	result = read_buffer(buff);
+	{
+		// printf("buffer = %s\n", buff);
+		result = add_buffer(buff, result);
+		if (ft_is_set(result, '\n'))
+			return (result);
+		// printf("result = %s\n", result);
+	}
+	result = read_buffer(fd, buff, result);
 	return (result);
 }
+/*
+#include <fcntl.h>
+
+int	main(void)
+{
+	int	fd = open("get_next_line.h", O_RDONLY);
+	char *input;
+
+	input = get_next_line(fd);
+	while (input)
+	{
+		printf("%s", input);
+		free(input);
+		input = get_next_line(fd);
+	}
+	close(fd);
+	return (0);
+}*/
