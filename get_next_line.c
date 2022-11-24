@@ -6,7 +6,7 @@
 /*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 09:13:59 by aascedu           #+#    #+#             */
-/*   Updated: 2022/11/23 17:30:40 by aascedu          ###   ########lyon.fr   */
+/*   Updated: 2022/11/24 13:32:55 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,19 +71,17 @@ char	*add_buffer(char *buff, char *result)
 }
 
 
-char	*read_buffer(int fd, char *buff, char *result)
+/*char	*read_buffer(int fd, char *buff, char *result)
 {
 	int	i;
-	int	length_read;
 
 	i = 0;
-	length_read = read(fd, buff, BUFFER_SIZE);
 	if (length_read <= 0)
 	{
 		buff[BUFFER_SIZE] = EOF;
 		return (free(result), NULL);
 	}
-	while (length_read == BUFFER_SIZE && !ft_is_set(buff, '\n'))
+	while ( && !ft_is_set(buff, '\n'))
 	{
 		result = add_buffer(buff, result);
 		length_read = read(fd, buff, BUFFER_SIZE);
@@ -92,28 +90,37 @@ char	*read_buffer(int fd, char *buff, char *result)
 	if (!ft_is_set(result, '\n'))
 		result = add_buffer(buff, result);
 	return (result);
-}
+}*/
 
 char	*get_next_line(int fd)
 {
 	static char	buff[BUFFER_SIZE + 1] = {0};
 	char		*result;
+	int			byte_read;
+	int			i;
 
-	if (fd < 0 || fd > OPEN_MAX)
-		return (NULL);
-	if (ft_is_set(buff, EOF))
+	if (read(fd, buff, 0) == -1)
 		return (NULL);
 	result = (char *)malloc(sizeof(char));
 	if (!result)
 		return (NULL);
 	*result = 0;
-	if (buff[0] != '\0')
+	byte_read = 1;
+	i = 0;
+	while (byte_read)
 	{
-		result = add_buffer(buff, result);
-		if (ft_is_set(result, '\n'))
+		byte_read = read(fd, buff, BUFFER_SIZE);
+		if (!ft_index_nl(buff, i))
+		{
+			result = ft_strjoin(result, buff);
+		}
+		else
+		{
+			result = add_buffer(buff, result);
 			return (result);
+		}
+		i++;
 	}
-	result = read_buffer(fd, buff, result);
 	return (result);
 }
 /*
@@ -121,8 +128,8 @@ char	*get_next_line(int fd)
 
 int	main(void)
 {
-	int	fd = open("get_next_line.h", O_RDONLY);
-	char *input;
+	int	fd = open("../../francinette/tests/get_next_line/gnlTester/files/alternate_line_nl_no_nl", O_RDONLY);
+	//char *input;
 
 	input = get_next_line(fd);
 	while (input)
@@ -131,6 +138,10 @@ int	main(void)
 		free(input);
 		input = get_next_line(fd);
 	}
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
 	close(fd);
 	return (0);
-}*/
+}
+*/

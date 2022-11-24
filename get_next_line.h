@@ -12,7 +12,7 @@ char	*ft_strjoin(char *s1, char *s2);
 char	*ft_strdup_index(char *s1, size_t index);
 
 int		ft_is_set(char *str, char c);
-int		ft_isnew(char *line, int i);
+int		ft_index_nl(char *line, int i);
 
 size_t	ft_strlen(char *str);
 

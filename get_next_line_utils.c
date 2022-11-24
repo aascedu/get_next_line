@@ -6,7 +6,7 @@
 /*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 09:13:52 by aascedu           #+#    #+#             */
-/*   Updated: 2022/11/23 17:25:27 by aascedu          ###   ########lyon.fr   */
+/*   Updated: 2022/11/24 13:22:24 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,6 @@ char	*ft_strjoin(char *s1, char *s2)
 	}
 	res[i + j] = '\0';
 	free(s1);
-	free(s2);
+	//free(s2);
 	return (res);
 }
