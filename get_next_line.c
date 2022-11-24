@@ -6,7 +6,7 @@
 /*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 09:13:59 by aascedu           #+#    #+#             */
-/*   Updated: 2022/11/24 13:32:55 by aascedu          ###   ########lyon.fr   */
+/*   Updated: 2022/11/24 15:28:49 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 	}
 	return (dst);
 }
-
+/*
 char	*add_buffer(char *buff, char *result)
 {
 	size_t	i;
@@ -68,6 +68,18 @@ char	*add_buffer(char *buff, char *result)
 	ft_memmove(buff, buff + i, BUFFER_SIZE - i + 1);
 	ft_bzero(buff + BUFFER_SIZE - i, i);
 	return (result);
+}*/
+
+char	*add_buffer(char *result, char *buff, int size)
+{
+	int	i;
+
+	i = 0;
+	while (buff[i] && buff[i] != '\n')
+		i++;
+	if (buff[i] == '\n')
+		i++;
+	return (ft_strjoin(result, ft_strdup_index(buff, i), size));
 }
 
 
@@ -106,38 +118,33 @@ char	*get_next_line(int fd)
 		return (NULL);
 	*result = 0;
 	byte_read = 1;
-	i = 0;
+	i = 1;
 	while (byte_read)
 	{
 		byte_read = read(fd, buff, BUFFER_SIZE);
-		if (!ft_index_nl(buff, i))
+		if (!ft_is_set(buff, '\n'))
 		{
-			result = ft_strjoin(result, buff);
+			result = ft_strjoin(result, buff, i);
 		}
 		else
 		{
-			result = add_buffer(buff, result);
+			result = add_buffer(result, buff, i);
 			return (result);
 		}
 		i++;
 	}
 	return (result);
 }
+
 /*
+
+
 #include <fcntl.h>
 
 int	main(void)
 {
 	int	fd = open("../../francinette/tests/get_next_line/gnlTester/files/alternate_line_nl_no_nl", O_RDONLY);
-	//char *input;
 
-	input = get_next_line(fd);
-	while (input)
-	{
-		printf("%s", input);
-		free(input);
-		input = get_next_line(fd);
-	}
 	printf("%s", get_next_line(fd));
 	printf("%s", get_next_line(fd));
 	printf("%s", get_next_line(fd));
@@ -145,3 +152,11 @@ int	main(void)
 	return (0);
 }
 */
+/*
+int	main(void)
+{
+	char	*s;
+
+	s = ft_strdup_index("12", 2);
+	printf("%s\n", add_buffer(s, "bonjour\n"));
+}*/

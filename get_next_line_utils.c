@@ -6,7 +6,7 @@
 /*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 09:13:52 by aascedu           #+#    #+#             */
-/*   Updated: 2022/11/24 13:22:24 by aascedu          ###   ########lyon.fr   */
+/*   Updated: 2022/11/24 15:27:53 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	*ft_strdup_index(char *s1, size_t index)
 	return (copy);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin(char *s1, char *s2, int size)
 {
 	char	*res;
 	int		i;
@@ -76,17 +76,17 @@ char	*ft_strjoin(char *s1, char *s2)
 
 	if (s1 == NULL || s2 == NULL)
 		return (NULL);
-	res = malloc(sizeof(char) * ((int)ft_strlen(s1) + (int)ft_strlen(s2) + 1));
+	res = malloc(sizeof(char) * ((BUFFER_SIZE * size) + BUFFER_SIZE + 1));
 	if (!res)
 		return (NULL);
 	i = 0;
-	while (i < (int)ft_strlen(s1))
+	while (i < BUFFER_SIZE * size)
 	{
 		res[i] = s1[i];
 		i++;
 	}
 	j = 0;
-	while (j < (int)ft_strlen(s2))
+	while (j < BUFFER_SIZE)
 	{
 		res[i + j] = s2[j];
 		j++;
