@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: arthurascedu <arthurascedu@student.42ly    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 09:13:59 by aascedu           #+#    #+#             */
-/*   Updated: 2022/11/24 15:28:49 by aascedu          ###   ########lyon.fr   */
+/*   Updated: 2022/11/27 20:52:48 by arthurasced      ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ char	*get_next_line(int fd)
 	return (result);
 }
 
-/*
+
 
 
 #include <fcntl.h>
@@ -151,7 +151,7 @@ int	main(void)
 	close(fd);
 	return (0);
 }
-*/
+
 /*
 int	main(void)
 {
