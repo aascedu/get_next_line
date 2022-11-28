@@ -6,7 +6,7 @@
 /*   By: arthurascedu <arthurascedu@student.42ly    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 11:05:04 by aascedu           #+#    #+#             */
-/*   Updated: 2022/11/28 17:40:50 by arthurasced      ###   ########lyon.fr   */
+/*   Updated: 2022/11/28 20:45:49 by arthurasced      ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,17 +79,21 @@ char	*get_next_line(int fd)
 	char		*line;
 	int			byte_read;
 
-if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 		return (NULL);
 	line = (char *)malloc(sizeof(char));
 	if (!line)
 		return (NULL);
 	*line = 0;
 	byte_read = 1;
+	if (!buff[0])
+		byte_read = read(fd, buff, BUFFER_SIZE);
+	if (byte_read <= 0)
+		free(line);
+	if (byte_read <= 0)
+		return (NULL);
 	while (byte_read)
 	{
-		if (!buff[0])
-			byte_read = read(fd, buff, BUFFER_SIZE);
 		if (ft_newline(buff))
 			return (add_buffer(line, buff));
 		line = ft_strjoin(line, buff);
@@ -97,21 +101,3 @@ if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 	}
 	return (line);
 }
-/*
-int	main(void)
-{
-	int	fd;
-
-	fd = open("../../francinette/tests/get_next_line/gnlTester/files/alternate_line_nl_with_nl", O_RDONLY);
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	return (0);
-}
-*/

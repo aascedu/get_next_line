@@ -6,7 +6,7 @@
 /*   By: arthurascedu <arthurascedu@student.42ly    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 11:13:37 by aascedu           #+#    #+#             */
-/*   Updated: 2022/11/28 17:12:07 by arthurasced      ###   ########lyon.fr   */
+/*   Updated: 2022/11/28 20:15:41 by arthurasced      ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,11 @@
 # define GET_NEXT_LINE_H
 # include <stdlib.h>
 # include <unistd.h>
-#include <limits.h>
+# include <limits.h>
 
-//DELETE
-#include <stdio.h>
-#include <fcntl.h>
-//DELETE
-
-int	ft_strlen(char *str);
-int	ft_newline(char *buff);
-int	ft_index_nl(char *buff);
+int		ft_strlen(char *str);
+int		ft_newline(char *buff);
+int		ft_index_nl(char *buff);
 char	*ft_strjoin2(char *line, char *temp);
 char	*ft_strjoin(char *line, char *buff);
 void	*ft_memmove(void *dst, const void *src, size_t len);

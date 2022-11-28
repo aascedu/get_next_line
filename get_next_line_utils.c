@@ -6,7 +6,7 @@
 /*   By: arthurascedu <arthurascedu@student.42ly    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 17:09:51 by arthurasced       #+#    #+#             */
-/*   Updated: 2022/11/28 17:10:06 by arthurasced      ###   ########lyon.fr   */
+/*   Updated: 2022/11/28 20:16:06 by arthurasced      ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	ft_index_nl(char *buff)
 		if (buff[i] == '\n')
 		{
 			i++;
-			break;
+			break ;
 		}
 	}
 	return (i);
