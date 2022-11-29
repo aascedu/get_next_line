@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arthurascedu <arthurascedu@student.42ly    +#+  +:+       +#+        */
+/*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 17:09:51 by arthurasced       #+#    #+#             */
-/*   Updated: 2022/11/28 20:16:06 by arthurasced      ###   ########lyon.fr   */
+/*   Updated: 2022/11/29 14:07:24 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,11 @@ char	*ft_strjoin2(char *line, char *temp)
 	temp_len = ft_strlen(temp);
 	result = (char *)malloc(sizeof(char) * (line_len + temp_len + 1));
 	if (!result)
+	{
+		free(line);
+		free(temp);
 		return (NULL);
+	}
 	i = -1;
 	while (line[++i])
 		result[i] = line[i];
