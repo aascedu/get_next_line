@@ -6,7 +6,7 @@
 /*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 11:13:37 by aascedu           #+#    #+#             */
-/*   Updated: 2022/11/29 10:27:33 by aascedu          ###   ########lyon.fr   */
+/*   Updated: 2022/11/30 15:37:54 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@
 
 char	*add_buffer(char *line, char *buff);
 char	*ft_strjoin(char *line, char *buff);
-
-char	*ft_strjoin2(char *line, char *temp);
 char	*get_next_line(int fd);
 
 int		ft_strlen(char *str);

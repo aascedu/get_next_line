@@ -6,26 +6,11 @@
 /*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 11:05:04 by aascedu           #+#    #+#             */
-/*   Updated: 2022/11/29 16:11:24 by aascedu          ###   ########lyon.fr   */
+/*   Updated: 2022/11/30 15:41:41 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-void	ft_bzero(void *s, size_t n)
-{
-	size_t	i;
-
-	i = 0;
-	if (n > 0)
-	{
-		while (i < n)
-		{
-			((char *)s)[i] = 0;
-			i++;
-		}
-	}
-}
 
 void	*ft_memmove(void *dst, const void *src, size_t len)
 {
@@ -67,7 +52,7 @@ char	*add_buffer(char *line, char *buff)
 	while (++j < i)
 		temp[j] = buff[j];
 	temp[j] = '\0';
-	temp = ft_strjoin2(line, temp);
+	temp = ft_strjoin(line, temp);
 	ft_memmove(buff, buff + i, BUFFER_SIZE - i);
 	ft_bzero(buff + (BUFFER_SIZE - i), ft_strlen(buff + (BUFFER_SIZE - i)));
 	return (temp);
@@ -80,7 +65,7 @@ char	*get_next_line(int fd)
 	int			byte_read;
 
 	if (fd < 0 || fd > OPEN_MAX || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
-		return (NULL);
+		return (ft_bzero(buff, BUFFER_SIZE + 1), NULL);
 	line = (char *)malloc(sizeof(char));
 	if (!line)
 		return (NULL);

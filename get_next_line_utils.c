@@ -6,7 +6,7 @@
 /*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 17:09:51 by arthurasced       #+#    #+#             */
-/*   Updated: 2022/11/29 14:07:24 by aascedu          ###   ########lyon.fr   */
+/*   Updated: 2022/11/30 15:40:16 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,24 @@ int	ft_strlen(char *str)
 	int	i;
 
 	i = 0;
-	while (str[i])
+	while (str && str[i])
 		i++;
 	return (i);
+}
+
+void	ft_bzero(void *s, size_t n)
+{
+	size_t	i;
+
+	i = 0;
+	if (n > 0)
+	{
+		while (i < n)
+		{
+			((char *)s)[i] = 0;
+			i++;
+		}
+	}
 }
 
 int	ft_newline(char *buff)
@@ -52,7 +67,7 @@ int	ft_index_nl(char *buff)
 	return (i);
 }
 
-char	*ft_strjoin2(char *line, char *temp)
+char	*ft_strjoin(char *line, char *temp)
 {
 	char	*result;
 	int		line_len;
@@ -77,33 +92,5 @@ char	*ft_strjoin2(char *line, char *temp)
 	result[line_len + temp_len] = '\0';
 	free(line);
 	free(temp);
-	return (result);
-}
-
-char	*ft_strjoin(char *line, char *buff)
-{
-	char	*result;
-	int		line_len;
-	int		i;
-	int		j;
-
-	line_len = ft_strlen(line);
-	result = (char *)malloc(sizeof(char) * (line_len + BUFFER_SIZE + 1));
-	if (!result)
-		return (NULL);
-	i = 0;
-	while (line[i])
-	{
-		result[i] = line[i];
-		i++;
-	}
-	j = 0;
-	while (buff[j])
-	{
-		result[i + j] = buff[j];
-		j++;
-	}
-	result[i + j] = '\0';
-	free(line);
 	return (result);
 }
