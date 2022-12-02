@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 11:05:04 by aascedu           #+#    #+#             */
-/*   Updated: 2022/12/02 12:09:12 by aascedu          ###   ########lyon.fr   */
+/*   Updated: 2022/12/02 13:04:15 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ char	*add_buffer(char *line, char *buff)
 		temp[j] = buff[j];
 	temp[j] = '\0';
 	temp = ft_strjoin(line, temp);
+	if (!temp)
+		return (NULL);
 	ft_memmove(buff, buff + i, BUFFER_SIZE - i);
 	ft_bzero(buff + (BUFFER_SIZE - i), ft_strlen(buff + (BUFFER_SIZE - i)));
 	return (temp);
@@ -60,27 +62,29 @@ char	*add_buffer(char *line, char *buff)
 
 char	*get_next_line(int fd)
 {
-	static char	buff[BUFFER_SIZE + 1] = {0};
+	static char	buff[OPEN_MAX][BUFFER_SIZE + 1] = {{0}};
 	char		*line;
 	int			byte_read;
 
-	if (fd < 0 || fd > OPEN_MAX || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
-		return (ft_bzero(buff, BUFFER_SIZE + 1), NULL);
+	if (fd < 0)
+		return (NULL);
+	if (fd > OPEN_MAX || BUFFER_SIZE <= 0 || read(fd, NULL, 0) != 0)
+		return (ft_bzero(buff[fd], BUFFER_SIZE), NULL);
 	line = (char *)malloc(sizeof(char));
 	if (!line)
 		return (NULL);
 	*line = 0;
 	byte_read = 1;
-	if (!buff[0])
-		byte_read = read(fd, buff, BUFFER_SIZE);
+	if (!buff[fd][0])
+		byte_read = read(fd, buff[fd], BUFFER_SIZE);
 	if (byte_read <= 0)
 		return (free(line), NULL);
 	while (byte_read)
 	{
-		if (ft_newline(buff))
-			return (add_buffer(line, buff));
-		line = add_buffer(line, buff);
-		byte_read = read(fd, buff, BUFFER_SIZE);
+		if (ft_newline(buff[fd]))
+			return (add_buffer(line, buff[fd]));
+		line = add_buffer(line, buff[fd]);
+		byte_read = read(fd, buff[fd], BUFFER_SIZE);
 	}
-	return (add_buffer(line, buff));
+	return (add_buffer(line, buff[fd]));
 }
